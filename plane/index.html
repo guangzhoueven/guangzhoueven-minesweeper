@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>飞机大战网页版</title>
+
+
+<script>
+
+
+
+//var b1_t=160,b2_t=2000;
+var e_r=70,b_r=50;
+var p_r=1.45;
+
+var _blood = [1,12,24,8];
+</script>
+
+
+<style type="text/css" media="screen">
+*{
+margin: 0;
+padding: 0;
+-webkit-touch-callout: none;
+}
+
+
+img{
+border:0;
+ pointer-events:none;
+}
+
+
+
+html,body{
+
+	height:100%;
+	background-color:#333333;
+	color:white;
+
+}
+
+
+#layout{
+	width:100%;
+	height:100%;
+	margin: 0 auto;
+	background: url('img/bj.jpg') center bottom 100% auto;
+	/* background:#505149; */
+	position: relative;
+	overflow: hidden;
+
+}
+.plane{
+	width:110px;
+	height:90px;
+	background:url('img/plane.png');
+	position: absolute;
+
+	cursor:pointer;
+}
+.b1{
+	width:5px;
+	height:15px;
+	border-radius:50% 50% 5px 5px;
+	background:#fff;
+	position: absolute;
+	top:-50px;
+	left:50%;
+}
+
+
+.enemy0{
+			width:126px;
+			height:81px;
+	background:url('img/e0.png');
+	position: absolute;
+	
+	
+}
+.enemy1{
+			width:108px;
+			height:81px;
+			
+	background:url('img/e1.png');
+	position: absolute;
+	
+	
+}
+.enemy2{
+			width:126px;
+			height:87px;
+	background:url('img/e2.png');
+	position: absolute;
+	
+	
+}
+.enemy3{
+			width:120px;
+			height:101px;
+	background:url('img/e3.png');
+	position: absolute;
+	
+	
+}
+.b2{
+	width:10px;
+	height:10px;
+	position: absolute;
+	border-radius:50%;
+	left:50%;
+	bottom: -50px;
+	background:#fff;
+}
+
+#score{
+	display: none;
+	
+	font-size:30px;
+	font-weight:bold;
+	color:#99B2D6;
+	background:#031540;
+	
+	padding: 5px 15px;
+	border:5px solid #425579;
+	border-radius:50px;
+	position: absolute;
+	top:10px;
+	left:10px;
+	z-index:1000;
+
+	
+}
+
+a{
+	font-size:20px;
+	font-weight:bold;
+	color:#99B2D6;
+	background:#031540;
+}
+
+#home{
+
+	
+	padding: 0px;
+
+
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index:90000;
+
+
+}		
+
+/*
+#start{
+	width: 100%;
+	height:100%;
+	background:rgba(0, 0, 0, 0.7);
+	position: absolute;
+	top:0;
+	left:0;
+}
+*/
+
+#startBtn{
+	background:blue;
+	color: #fff;
+	font-size:50px;
+
+	width:200px;
+
+
+	padding: 10px 30px;
+	border:5px solid #fff;
+	border-radius:50px;
+
+	outline:none;
+	cursor:pointer;
+}
+
+#start{
+	
+	width:100%;
+
+	margin: -200px 0 0 0;
+
+	
+
+	
+	position: absolute;
+	top:50%;
+	left:0;
+}
+
+#gname{
+	font-size:50px;
+	font-weight:bold;
+
+	color:rgba(106,124,197,1);
+	line-height:70px;
+	margin-top:-10px;
+}
+</style>
+</head>
+<body>
+
+<!--audio autoplay loop src="audio/bjyy.mp3"></audio-->
+<audio id="fire" loop src="audio/fire.mp3"></audio>
+<audio id="boom" src="audio/boom.mp3"></audio>
+<audio id="bigboom" src="audio/bigboom.mp3"></audio>
+
+
+<div id="layout"></div>
+
+<div id="home"><a href="../index.html">返回</a></div>
+
+<div id="score">0</div>
+
+
+<div id="start">
+
+
+<div style="background:rgba(106,124,197,0.5);	padding: 10px 0 20px; 	text-align:center;">
+	<img src="img/plane.png">
+
+	<div id=gname >飞机大战</div>
+
+	<input id="startBtn" type="button" value="开始">
+
+</div>
+
+
+
+
+<script src="main.1.1.js"></script>
+
+
+<div style="margin-top:2.5rem;text-align: center;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2872916894005511"
+     crossorigin="anonymous"></script>
+<!-- falling -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2872916894005511"
+     data-ad-slot="5150209201"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+
+
+
+
+
+<div style="padding:1rem;margin-top:1.5rem;">
+移动飞机避开敌方飞机和子弹，并击落敌机。敌方飞机总共四个类型，击落它们需要的子弹数不同，得分也不同。
+<br><br>
+电脑：移动鼠标控制己方飞机的位置。
+<br><br>
+手机：点击屏幕移动己方飞机到指定位置。
+<br>
+<br>
+
+创意和图片来自：https://www.bakl.xyz/，代码已重写。
+<br>
+<br>
+下一步计划：增加自定义难度选项。
+</div>
+
+<div style="margin-top:2rem;text-align:center;border-top:solid 1px gray">
+<br>
+Minesweeper.cn
+<br>
+<br>
+<br>
+<br>
+</div>
+</div>
+
+</body>
+</html>

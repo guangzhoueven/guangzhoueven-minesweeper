@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="数独,sudoku">
+
+<title>数独网页版 - sudoku</title>
+<style type="text/css">
+
+
+    body {
+        background-color: #ddddd9;
+    line-height:1.6rem;
+    }
+    input[type=checkbox] {
+        vertical-align: middle;
+        height: 1rem;
+        width: 1rem;
+    }
+
+
+
+    #info {
+        display: none;
+        z-index: 9;
+        border-radius: 5px;
+        color: #FFF;
+        border: 0px solid #FFF;
+        box-shadow: 0 0 5px #000;
+        position: absolute;
+        margin: auto;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: fit-content;
+        height: fit-content;
+        padding: 20px 40px;
+    }
+
+
+
+
+</style>
+<script>
+var init_num=30;
+
+</script>
+</head>
+<body>
+
+
+<a href="../index.html" >返回首页</a>&nbsp;<b>数独</b><span style="float:right">夜间<input type="checkbox" id="bcolor" onclick="redraw()">&nbsp;</span>
+
+<br>
+
+
+
+
+
+ <div style="margin-top: 0.5rem; text-align: center;">
+空格数<input type="number" id="knum" style="width:3rem;text-align:center">
+
+<input type="button"  value="开始" onclick="start();"  id="startbtn">
+</div>
+
+<div style="margin-top: 0.5rem; text-align: center;">
+<canvas id="canA"></canvas>
+</div>
+<div style="margin-top: 5px; text-align: center;">
+<canvas id="canB" ></canvas>
+</div>
+
+
+
+<div id="info" style="display: none; background-color: SteelBlue; text-align: center; ">
+<div style="font-size:3rem;line-height:4rem;">成功</div>
+<input type="button" value=" OK " onclick="ok();">
+</div>
+
+<script src="sudo.1.9.js"></script>
+
+
+
+
+<div style="text-align:center;margin-top:2.5rem;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2872916894005511"
+     crossorigin="anonymous"></script>
+<!-- falling -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2872916894005511"
+     data-ad-slot="5150209201"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+<div style="text-align: left;width:90%;padding:1rem; margin-top:2rem">
+
+    数独规则：格子数为9*9。由9个3*3的九宫格组成。每个小格子填入数字1到9。每一行、每一列不能有重复的数字；每一个九宫格内不能有重复的数字。当所有空格都填满时为成功。
+    <br><br>
+    玩法：点击下方列表的数字或格子内的黑色数字，则该数字为当前数字，点击空格则填入该数字，再次点击则删除。人工填入的数字为绿色（夜间模式下为黄色）。橙色为已完成数字。
+
+    <br><br>
+    设置空格数调节难度（空格数和难度的关系待考证）。本站的数独目前不保证唯一解。数独的起源不详。日本人鍜治真起确定了数独的名称并把它推广到了全世界。
+    <br><br>
+
+</div>
+<br>
+<div style="text-align:center;">
+<hr size=1 width="90%">
+<br>
+&copy; minesweeper.cn
+</div>
+<br>
+<br>
+
+
+
+</body>
+</html>

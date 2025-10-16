@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=1.0, user-scalable=yes">
+	<title>塔防游戏</title>
+
+<meta name="keywords" content="tower defense, 塔防">
+<style>
+
+body {
+margin: 0;
+padding: 0;
+font-size: 14px;
+line-height: 20px;
+font-family: Verdana, "Times New Roman", serif;
+background: #1A74BA;
+}
+h1 {
+padding: 0;
+margin: 0;
+line-height: 48px;
+font-size: 18px;
+font-weight: bold;
+letter-spacing: 0.12em;
+}
+
+#wrapper {
+margin: 0 auto;
+}
+#td-wrapper {
+padding: 8px 24px 60px 24px;
+background: #d0d0d0;
+}
+#td-board {
+display: none;
+font-size: 16px;
+}
+#td-board canvas#td-canvas {
+position: relative;
+background: #fff;
+border: solid 1px #cdf;
+}
+#td-loading {
+font-size: 18px;
+line-height: 48px;
+padding: 60px 0 120px 0;
+font-style: italic;
+}
+#about {
+color: #fff;
+padding: 8px 24px;
+}
+#about a {
+color: #fff;
+}
+
+</style>
+
+</head>
+
+<body id="tower-defense" >
+<center>
+<div id="wrapper">
+	<div id="td-wrapper">
+		
+
+		<div id="td-loading">Loading...</div>
+
+		<div id="td-board">
+			<canvas id="td-canvas">HTML 5 Canvas Needed</canvas>
+		</div>
+
+        
+<script type="text/javascript" src="main.1.2.js"></script>
+<script type="text/javascript" src="msg-zh.js"></script>
+
+
+
+<script type="text/javascript">
+	window.onload = function () {
+		_TD.init("td-board", true);
+		document.getElementById("td-loading").style.display = "none";
+		document.getElementById("td-board").style.display = "block";
+        ad();
+	};
+</script>
+
+
+
+
+
+<div style="margin-top:2.5rem;text-align:left;">
+<br>
+在武器托盘区选择一种武器，然后在作战区选择位置点击，即放置该种武器。
+每种武器有不同的射程和威力。
+<br>托盘区中还有路障和拆除器。
+<br>当武器被放置后，怪物就从白洞出现，往黑洞前进。当怪物进入射程后，武器即进行自动射击。消灭怪物获得金钱奖励。金钱用于购买武器。
+<br>如果怪物进入黑洞，你的生命值就会受到伤害。每种怪物的伤害值和前进速度不同。
+<br>你需要布置武器和路障的位置，以约束怪物的前进路线。每次游戏，白洞和黑洞的位置随机生成。
+<br>一波怪物结束后，下一波怪物的数量和伤害值会增加。所以你需要不断新增或升级武器。
+<br>可以拆除或替换旧装备，返还一半的钱。
+<br>点击怪物，可以集中周边火力打击它。
+<br>每隔5波增加5点生命值。
+          
+		<br>
+		<br>
+		修改自 <a href="https://oldj.net/static/html5-tower-defense/td.html" target="_blank">他人作品</a>
+	</div>
+
+
+<div style="text-align:center;margin-top:2.5rem;">
+<script async  id="gg"  crossorigin="anonymous"></script>
+<!-- falling -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2872916894005511"
+     data-ad-slot="5150209201"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+function ad(){
+document.getElementById("gg").src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2872916894005511";
+}
+</script>
+
+</div>
+
+</div>
+
+
+
+
+	<div id="about">
+		
+	
+<br><br>
+<a href="../index.html">minesweeper.cn</a>
+
+<br><br>
+
+<br><br><br>
+
+		
+		
+	</div>
+</div>
+</center>
+
+</body>
+</html>
