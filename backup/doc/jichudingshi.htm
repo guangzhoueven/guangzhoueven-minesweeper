@@ -1,0 +1,172 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>扫雷入门定式</title>
+
+<style>
+body{background:#f7f7f0;}
+table{border-collapse:collapse;cursor:default;}
+#foo{border-top:solid 1px #cccccc;padding-top:2rem;margin-top:6rem;width:90%;text-align:center}
+</style>
+
+
+
+<base target=_top>
+</head>
+
+<body>
+
+<a id=back href="../index.html">返回首页</a>
+
+<script>
+if(document.referrer.length>0 && document.location.href.indexOf(document.referrer)==0){
+document.getElementById("back").href="javascript:history.back(-1)";}
+</script>
+
+
+
+<center>
+
+<br><br>
+
+<div style="text-align:left;width:90%">
+
+
+
+
+
+<br>
+<b>最常用的基础定式</b>
+
+
+<br><br>
+
+先假设待判的数字的周围没有已标记的雷（周围有雷的情况，请看后面的“减法原理”）。
+<br><br>
+图中隐去了不相关的数字。蓝点为空，红点为雷。
+<br><br>
+数字串为横或竖方向，没有斜线方向，但是未明格子可以是斜线方向。
+<br><br>
+<br>
+
+<b>靠边定式</b>
+<br><br>
+
+一个数字紧邻边框或其外侧为空，称为靠边。
+
+
+<yi't [yi'tz]br><br><br>
+① 11定式：两个1排列，一个1靠边，则另一个1单独对应的方块都不是雷。
+<br><br>
+<img src="11-1.jpg">图中一个1邻框，则另一个1外侧的三个格子都不是雷。
+
+<br><br><br>
+<img src="11-2.jpg">图中左边的1悬空，则另一个1外侧三个都不是雷。
+此为挖坑形态，如果点开后还是1，则仍符合11定式，还可以再挖一次。
+
+
+<br><br><br>
+<img src="11-3.png">
+相隔形态。上面的1靠边，下面的1独享的格子都不是雷。
+
+<br><br><br>
+② 【扩展】nn定式</b>：两个n相邻或相隔，其中一个n靠边，则另一个n的独享方块都不是雷。其中n=2,3。
+
+<br><br><br>
+③ 【推论】111定式：三个1相邻，两头都靠边，则中间一个是雷，其余两个不是雷。
+
+<br><br><br>
+④  2在头，两个雷。
+<br><br><img src="2-2.jpg">
+
+<br><br>
+<br><br>
+<b>任意位置定式</b>
+<br>
+
+
+<br><br>
+① 12定式。1和2排列，2有且只有一个独享方块，则此方块为雷。而1独享的方块都不是雷；
+<br><br>
+<img src="12.jpg">12相邻
+
+<br><br><br>
+<img src="12-2.png">相隔形态
+
+<br><br><br>
+
+② 【扩展】1n定式，除了1和n共享的未明方块，n有n-1个独享方块，则这n-1个都是雷，而1的独享方块都不是雷。其中n=3,4。
+
+
+
+<br><br><br>
+③ 【推论】121定式。数字121相邻。则中间的不是雷，两个1对应的是雷。两个1外侧都不是雷。
+<br>
+<img src="121.jpg">
+
+
+<br><br><br>
+④ 【推论】1221定式。数字1221相邻，两个2共享两个未明格子，则这两个格子是雷，其余都不是雷。
+<br>
+<img src="1221.jpg">
+
+<br><br><br>
+⑤ 3在中，三个雷。
+<br><br><img src="3.jpg">
+
+
+<br><br><br>
+
+以上定式，方向左右横竖都一样。
+
+<br><br><br>
+<b>减法原理：</b>
+<br><br>
+如果数字的周围已标有地雷，则先将数字减去周围雷数，同时心中把这些雷变为空白，再应用定式。
+<br><br>
+下图：实为11定式，绿点可以打开
+<br>
+<img src="minus3.jpg">
+
+
+<br>
+<br>
+<br>
+下图：3周围有两个雷3-2=1，2周围有一个雷2-1=1，故简化为11模式，画点的两个格子可以直接打开。
+<br>
+<img src="minus.jpg">
+
+
+<br>
+<br>
+<br>
+下图：减完后是12定式，红点为雷。
+<br>
+<img src="minus12.jpg">
+
+
+<br>
+<br>
+<br>
+下图：根据图中上面的数字3，可以判断出椭圆圈住的两个未明格子有且只有一个雷。则下面的3变为2，适用12定式，蓝点非雷，红点为雷。
+<br>
+<img src="minus6.jpg">
+<br><br><br>
+
+
+<br>
+</div>
+
+
+
+
+<div id=foo>
+Minesweeper.cn
+</div>
+<br><br>
+</center>
+
+</body>
+</html>
