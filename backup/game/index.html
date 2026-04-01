@@ -1,0 +1,756 @@
+﻿<html>  
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="renderer" content="webkit"> 
+<meta name="viewport" content="initial-scale=1,maximum-scale=1, user-scalable=0">
+<meta name="keywords" content="扫雷, minesweeper">
+<meta name="description" content="本站提供了经典扫雷游戏，并略作改进，在电脑或手机上打开网页就可以玩，无需下载安装。增加了满屏级别，自适应屏幕大小。成绩榜实时显示大家的在线扫雷成绩。">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="57x57" href="resources/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="resources/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="resources/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="resources/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="resources/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="resources/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="resources/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="resources/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="resources/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="resources/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/svg+xml" href="resources/icons/favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="resources/icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+<title>扫雷游戏网页版 - Minesweeper</title>
+
+<script src="gfs1.js"></script>
+<script src="ns6.20.js"></script>
+<script src="multiplayer.js"></script>
+
+<style>
+
+body{margin:0px;font-family:Arial, sans-serif;}
+	
+input{height:1.8rem;width:3.8rem;font-size:1rem;}
+
+#face{
+	border:2px solid #808080;
+	border-left-color: #fff;
+	border-top-color: #fff;
+
+}
+#face:active{
+	border:2px solid #808080;
+	border-bottom:1px solid #808080; 
+	border-right:1px solid #808080; 
+
+}
+
+table{
+border-collapse:collapse;
+}
+
+.pad{
+border:2px solid #808080;
+border-right-color: #fff;
+	border-bottom-color: #fff;
+}
+
+input[type=checkbox]{vertical-align:middle;height:1.19rem;width:1.5rem;}
+
+.clk{
+text-decoration: underline;
+cursor: pointer;
+color:blue;
+font-size:1.1rem;
+padding:0.2rem 0.5rem;
+}
+
+.clk:hover{
+background-color:#f0f0f0;
+border-radius:3px;
+}
+
+.player-item{
+display:inline-block;
+margin:0.2rem;
+padding:0.4rem 0.8rem;
+background:#fff;
+border:2px solid #ddd;
+border-radius:5px;
+font-size:1.1rem;
+max-width:120px;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+}
+
+.player-item.active{
+border-color:#4CAF50;
+background:#e8f5e8;
+font-weight:bold;
+}
+
+.player-item.eliminated{
+border-color:#f44336;
+background:#ffeaea;
+color:#999;
+text-decoration:line-through;
+}
+
+.game-title{
+font-size:1.5rem;
+font-weight:bold;
+margin-bottom:0.5rem;
+color:#333;
+}
+
+.status-panel{
+font-size:1.2rem;
+margin:0.5rem 0;
+}
+
+.button-large{
+padding:0.8rem 1.5rem;
+font-size:1.2rem;
+background:#2196F3;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+margin:0.3rem;
+}
+
+.button-large:hover{
+background:#1976D2;
+}
+
+.button-large.success{
+background:#4CAF50;
+}
+
+.button-large.success:hover{
+background:#388E3C;
+}
+
+@media (min-width: 1200px) {
+body{
+font-size:1.1rem;
+}
+.clk{
+font-size:1.3rem;
+padding:0.3rem 0.8rem;
+}
+.player-item{
+font-size:1.3rem;
+padding:0.6rem 1.2rem;
+}
+.status-panel{
+font-size:1.4rem;
+}
+.main-container{
+padding: 2rem;
+}
+}
+
+@media (min-width: 1600px) {
+body{
+font-size:1.3rem;
+}
+.clk{
+font-size:1.5rem;
+padding:0.4rem 1rem;
+margin:0.5rem;
+}
+.player-item{
+font-size:1.5rem;
+padding:0.8rem 1.5rem;
+margin:0.5rem;
+}
+.status-panel{
+font-size:1.6rem;
+}
+.game-title{
+font-size:2rem;
+}
+.button-large{
+padding:1rem 2rem;
+font-size:1.4rem;
+margin:0.5rem;
+}
+.main-container{
+padding: 3rem;
+}
+}
+
+/* 希沃一体机优化 */
+@media (min-width: 1920px) {
+body{
+font-size:1.4rem;
+}
+.clk{
+font-size:1.7rem;
+padding:0.5rem 1.2rem;
+margin:0.6rem;
+}
+.player-item{
+font-size:1.7rem;
+padding:1rem 2rem;
+margin:0.6rem;
+}
+.status-panel{
+font-size:1.8rem;
+}
+.game-title{
+font-size:2.2rem;
+}
+.button-large{
+padding:1.2rem 2.5rem;
+font-size:1.6rem;
+margin:0.6rem;
+}
+.main-container{
+padding: 4rem;
+max-width: 1400px;
+}
+}
+
+/* 触摸优化 */
+@media (pointer: coarse) {
+.clk, .button-large{
+min-height: 44px;
+min-width: 44px;
+}
+.player-item{
+min-height: 50px;
+}
+}
+
+</style>
+
+<script>
+var shou="收起";
+var shez="设置";
+var w1="首字母不符合要求";
+var app="aaa";
+var af0=0;
+var nif0=0;
+
+// 多人游戏模式变量
+var gameMode = 1; // 1: 单人模式, 2: 多人比赛模式
+var players = []; // 玩家列表
+var currentPlayerIndex = 0; // 当前玩家索引
+var eliminatedPlayers = []; // 出局玩家列表
+var gameStarted = false; // 游戏是否开始
+var playerColors = [
+    '#2196F3', '#4CAF50', '#FF9800', '#9C27B0', '#00BCD4', '#FFC107', '#795548', '#607D8B', '#E91E63', '#3F51B5',
+    '#009688', '#CDDC39', '#FF5722', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50',
+    '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#9C27B0',
+    '#E91E63', '#F44336', '#FF5722', '#FF9800', '#FFC107', '#FFEB3B', '#CDDC39', '#8BC34A', '#4CAF50', '#009688'
+];
+
+function setGameMode(mode) {
+    gameMode = mode;
+    if (mode === 1) {
+        document.getElementById('singleMode').style.display = 'block';
+        document.getElementById('multiMode').style.display = 'none';
+        resetMultiGame();
+    } else {
+        document.getElementById('singleMode').style.display = 'none';
+        document.getElementById('multiMode').style.display = 'block';
+    }
+}
+
+function addPlayers() {
+    var count = parseInt(document.getElementById('playerCount').value);
+    var playerList = document.getElementById('playerList');
+    playerList.innerHTML = '';
+    players = [];
+    
+    for (var i = 1; i <= count; i++) {
+        var player = {
+            id: i,
+            name: '玩家' + i,
+            color: playerColors[i - 1],
+            eliminated: false
+        };
+        players.push(player);
+        
+        var playerDiv = document.createElement('div');
+        playerDiv.className = 'player-item';
+        playerDiv.id = 'player-' + i;
+        playerDiv.style.borderColor = player.color;
+        playerDiv.innerHTML = player.name;
+        playerList.appendChild(playerDiv);
+    }
+}
+
+function startMultiGame() {
+    if (players.length < 2) {
+        alert('请先添加至少2个玩家！');
+        return;
+    }
+    
+    gameStarted = true;
+    currentPlayerIndex = 0;
+    eliminatedPlayers = [];
+    
+    document.getElementById('playerSetup').style.display = 'none';
+    document.getElementById('gameStatus').style.display = 'block';
+    
+    updateGameStatus();
+    updatePlayerDisplay();
+    
+    // 开始新的扫雷游戏
+    _123(2); // 默认中级难度
+}
+
+function updateGameStatus() {
+    var currentPlayer = players[currentPlayerIndex];
+    document.getElementById('currentPlayer').innerHTML = currentPlayer.name;
+    document.getElementById('currentPlayer').style.color = currentPlayer.color;
+    
+    var remainingCount = players.filter(p => !p.eliminated).length;
+    document.getElementById('remainingPlayers').innerHTML = remainingCount;
+    
+    if (eliminatedPlayers.length > 0) {
+        var eliminatedNames = eliminatedPlayers.map(p => p.name).join('、');
+        document.getElementById('eliminatedPlayers').innerHTML = '已出局：' + eliminatedNames;
+    }
+}
+
+function updatePlayerDisplay() {
+    for (var i = 0; i < players.length; i++) {
+        var playerDiv = document.getElementById('player-' + players[i].id);
+        if (playerDiv) {
+            playerDiv.className = 'player-item';
+            if (i === currentPlayerIndex && !players[i].eliminated) {
+                playerDiv.className += ' active';
+            }
+            if (players[i].eliminated) {
+                playerDiv.className += ' eliminated';
+            }
+        }
+    }
+}
+
+// 手动切换玩家函数
+function manualNextPlayer() {
+    if (gameMode === 2 && gameStarted) {
+        nextPlayer();
+    }
+}
+
+// 强制更新游戏状态
+function forceUpdateGameStatus() {
+    if (gameMode === 2 && gameStarted) {
+        updateGameStatus();
+        updatePlayerDisplay();
+        console.log('游戏状态已强制更新');
+        console.log('当前玩家：', players[currentPlayerIndex].name);
+        console.log('剩余玩家数：', players.filter(p => !p.eliminated).length);
+    }
+}
+
+function nextPlayer() {
+    // 找到下一个未出局的玩家
+    var startIndex = currentPlayerIndex;
+    do {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+    } while (players[currentPlayerIndex].eliminated && currentPlayerIndex !== startIndex);
+    
+    updateGameStatus();
+    updatePlayerDisplay();
+}
+
+function eliminatePlayer() {
+    var currentPlayer = players[currentPlayerIndex];
+    currentPlayer.eliminated = true;
+    eliminatedPlayers.push(currentPlayer);
+    
+    console.log('玩家 ' + currentPlayer.name + ' 已出局');
+    console.log('剩余玩家数：', players.filter(p => !p.eliminated).length);
+    
+    // 立即更新显示
+    updatePlayerDisplay();
+    updateGameStatus();
+    
+    // 检查游戏是否结束
+    var remainingPlayers = players.filter(p => !p.eliminated);
+    if (remainingPlayers.length === 1) {
+        // 游戏结束，只剩一个玩家
+        setTimeout(function() {
+            alert('游戏结束！' + remainingPlayers[0].name + ' 获胜！');
+            resetMultiGame();
+        }, 500);
+    } else if (remainingPlayers.length === 0) {
+        // 所有玩家都出局
+        setTimeout(function() {
+            alert('游戏结束！没有获胜玩家。');
+            resetMultiGame();
+        }, 500);
+    } else {
+        // 继续游戏，切换到下一个玩家
+        setTimeout(function() {
+            nextPlayer();
+        }, 1000);
+    }
+}
+
+function resetMultiGame() {
+    gameStarted = false;
+    players = [];
+    currentPlayerIndex = 0;
+    eliminatedPlayers = [];
+    
+    document.getElementById('playerSetup').style.display = 'block';
+    document.getElementById('gameStatus').style.display = 'none';
+    document.getElementById('playerList').innerHTML = '';
+}
+
+// 重写原有的点击处理函数，添加多人游戏逻辑
+function handleCellClick(x, y) {
+    if (gameMode === 2 && gameStarted) {
+        // 多人模式下的点击处理
+        var result = originalHandleCellClick(x, y);
+        
+        // 如果点到雷，当前玩家出局
+        if (result && result.hitMine) {
+            eliminatePlayer();
+        } else {
+            // 没点到雷，切换到下一个玩家
+            nextPlayer();
+        }
+        
+        return result;
+    } else {
+        // 单人模式，使用原有逻辑
+        return originalHandleCellClick(x, y);
+    }
+}
+</script>
+
+<base target=_top>
+
+</head>  
+
+<body  style="background-color:#f7f7f0;background-image:url('https://file.guangzhoueven.dpdns.org/beautiful-light.svg');background-size:cover;background-position:center;background-repeat:no-repeat;min-height:100vh;"  onload="night();start();setTimeout(ad,500);">
+
+
+<center>
+<div class="main-container" style="max-width: 1200px;margin: 0 auto;padding: 1rem;">
+
+<div class="game-title" style="margin-top: 1rem;">
+网页扫雷游戏 - 希沃一体机比赛版
+</div>
+
+<div style="margin-top:0.8rem;">
+<a class=clk onclick="setGameMode(1)">单人模式</a>
+&nbsp;
+<a class=clk onclick="setGameMode(2)">多人比赛</a>
+</div>
+
+<div id="singleMode" style="margin-top:0.8rem;">
+<a class=clk onclick="_123(1)">基础</a>
+&nbsp;
+<a class=clk onclick="_123(2)">中级</a>
+&nbsp;
+<a class=clk onclick="_123(3)">专家</a>
+&nbsp;
+<a class=clk onclick="_123(4)">满屏</a>
+&nbsp;
+<a class=clk onclick="_123(5)">自定义</a>
+</div>
+
+<div id="multiMode" style="display:none;margin-top:0.8rem;">
+<div style="margin-bottom:0.5rem;">
+<a class=clk onclick="_123(1)">基础</a>
+&nbsp;
+<a class=clk onclick="_123(2)">中级</a>
+&nbsp;
+<a class=clk onclick="_123(3)">专家</a>
+&nbsp;
+<a class=clk onclick="_123(4)">满屏</a>
+</div>
+<div id="playerSetup" style="margin-top:0.5rem;padding:0.5rem;background:#f0f0f0;border-radius:5px;">
+<div style="margin-bottom:0.5rem;">玩家设置：</div>
+<div style="margin-bottom:0.5rem;color:#666;font-size:0.9rem;">游戏规则：每人轮流点一个格子，点完自动切换到下一位玩家，点到雷的出局</div>
+<div style="margin-bottom:0.5rem;">
+玩家数量：<input type="number" id="playerCount" min="2" max="40" value="4" style="width:60px;">
+<input type="button" value="添加玩家" onclick="addPlayers()">
+</div>
+<div id="playerList" style="margin-top:0.5rem;max-height:200px;overflow-y:auto;"></div>
+<input type="button" value="开始比赛" onclick="startMultiGame()" style="margin-top:0.5rem;padding:0.5rem 1rem;background:#4CAF50;color:white;border:none;border-radius:3px;cursor:pointer;">
+</div>
+<div id="gameStatus" style="display:none;margin-top:0.5rem;padding:0.5rem;background:#e8f4fd;border-radius:5px;">
+<div>当前玩家：<span id="currentPlayer" style="font-weight:bold;color:#2196F3;"></span></div>
+<div>剩余玩家：<span id="remainingPlayers" style="font-weight:bold;"></span></div>
+<div id="eliminatedPlayers" style="margin-top:0.3rem;color:#666;"></div>
+<div style="margin-top:0.5rem;">
+<input type="button" value="切换到下一位玩家" onclick="manualNextPlayer()" style="padding:0.5rem 1rem;background:#FF9800;color:white;border:none;border-radius:3px;cursor:pointer;">
+<input type="button" value="刷新状态" onclick="forceUpdateGameStatus()" style="padding:0.5rem 1rem;background:#2196F3;color:white;border:none;border-radius:3px;cursor:pointer;">
+</div>
+</div>
+</div>
+<div id=custom style="display:none;margin-top:5px">
+横<input id=hm type=number value=40>
+竖<input id=vm 输入=number value=24>
+雷<input id=mm type=number value=199>
+<input 输入=button onclick="udf()" value="确定" >
+</div>
+<table style="margin-top:1rem;border-radius:6px;background:#cccccc">
+<tr><td style="padding:9px;">
+
+<table id=p42 class=pad style="height:34px">
+<tr>
+<td width=50%><canvas id="rm" height=23 width=39></canvas>
+</td>
+<td align=center onmouseup="_45()" style="padding:0 8px 0 8px"><img id="face">
+<td width=50% align=right>
+<!--span id=sff style="margin-right:3px;line-height:18px;vertical-align:top"></span--><canvas id="es" height=23 width=39></canvas></td>
+</table>
+
+
+<canvas id="paf" class="pad" style="margin-top:6px;" width=0 height=0></canvas>
+
+
+<tr><td align=right>
+</table>
+
+
+<div style="margin-top:2rem;" >
+<a id=ss href="scores.htm" >成绩榜</a>
+</div>
+
+
+
+<div style="width:90%;text-align:left;margin-top:2.5rem;">
+<span style="vertical-align:middle">自动标雷</span><input type=checkbox checked id=af onclick="saf()" >
+<span style="float:right">
+夜间<input type="checkbox" id="bcolor" onclick="bcolor()"></span>
+
+</div>
+
+
+
+
+<div style="width:90%;text-align:left;margin-top:3rem;">
+第一次点击不会是雷。格子里的数字表示它周围有几个雷。游戏目标是找出所有雷。找错则输。点击表情重新开始。<b>“二选一”留到最后，可任选</b>，需先清完其他方块。
+
+<br><br>
+<b>电脑：</b>鼠标右键点击未明方块，以小旗标记为雷，再点去除标记。标记的雷数和数字匹配时，点击数字（左右键均可）翻开周围的安全区域。鼠标左键点击无标记方块则直接打开。
+
+<a id=setm class=clk onclick="mouse2()">设置</a>
+
+<div id="_mouse" style="border:solid 1px;display:none;padding:0.5rem;">
+
+鼠标起效时间点
+
+
+<br>
+<br>
+
+<i>左键</i>
+<br>
+<br>
+
+<input type=radio name="_mp1" value="0" onclick="_save(0,0);">按下时
+<input type=radio name="_mp1" value="1" onclick="_save(0,1);">弹起时
+
+<br>
+
+<br>
+<br>
+
+<i>右键</i>
+<br>
+<br>
+
+
+<input type=radio name="_mp2" value="0" onclick="_save(1,0);">按下时
+<input type=radio name="_mp2" value="1" onclick="_save(1,1);">弹起时
+
+<br>
+<br>
+</div>
+
+
+<br><br>
+<b>手机或平板：</b>在触屏上点击方块即标记为雷，再点去除标记。标记的雷数和数字匹配时，点击数字翻开周围的安全区域。长按方块直接打开（可设置为点击直接打开；或点击三次打开）。
+
+<a id=sett class=clk onclick="touch2()">设置</a>
+
+
+<div id="_touch" style="border:solid 1px;display:none;padding:0.5rem;">
+
+
+<i>触击效果</i>
+
+<br>
+<br>
+<input type=radio name="tpn" value="0" checked onclick="_save(2,0);smore(0);">标记
+<input type=radio name="tpn" value="1" onclick="_save(2,1);smore(1);">直开
+
+<br><br>
+<br>
+
+<div id=thint style="display:none;">
+<i>直开模式下的标记方法</i>
+<br>
+<br>
+长按
+</div>
+
+<div id=topen style="display:none;">
+
+<i>标记模式下的打开方法</i>
+<br>
+<br>
+<input type=radio name="opn" value="0" checked onclick="_save(3,0)">长按
+<input 输入=radio name="opn" value="1" onclick="_save(3，1)">快点三次
+</div>
+<br>
+<br>
+
+</div>
+
+</div>
+
+
+<div id=ad style="margin-top:2.5rem;width:90%;">
+
+<script id=gg async crossorigin="anonymous"></script>
+<!-- saolei -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2872916894005511"
+     data-ad-slot="1319601002"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+</div>
+
+
+<div style="width:90%;text-align:left;margin-top:2.5rem;">
+
+扫雷游戏起源于1973年的"方块"游戏。1992年微软发布的Windows 3.1中加入该游戏，从此风靡全世界。玩扫雷游戏，可以锻炼观察和推理能力，培养细心和耐心。
+<a href="doc/jichudingshi.htm">基础定式</a>
+<br><br>
+局域网中如访问不正常，可清空缓存或用https访问。
+<br><br>
+安卓手机上连击放大问题：【设置】-【智能辅助】-【无障碍】-【放大手势】-关闭。
+<br><br>
+不标雷的玩法称为盲扫。
+<!--苹果：【设置】-【通用】-【辅助功能】-【缩放】-关闭。-->
+<br><br>
+声明：本网站来自minesweeper.cn，minesweeper.cn版权所有。
+</div>
+
+
+<script>
+function ad(){
+document。getElementById("gg")。src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2872916894005511"
+}
+
+// 添加简单的音效支持
+function playSound(type) {
+    if (gameMode === 2 && gameStarted) {
+        try {
+            // 创建简单的音效
+            var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            var oscillator = audioContext.createOscillator();
+            var gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            switch(type) {
+                case 'mine':
+                    oscillator.frequency.value = 200;
+                    gainNode.gain.value = 0.3;
+                    break;
+                case 'safe':
+                    oscillator.frequency.value = 600;
+                    gainNode.gain.value = 0.1;
+                    break;
+                case 'turn':
+                    oscillator.frequency.value = 800;
+                    gainNode.gain.value = 0.1;
+                    break;
+            }
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.1);
+        } catch (e) {
+            // 音效播放失败，静默处理
+        }
+    }
+}
+
+// 重写showMineHitNotification函数，添加音效
+var originalShowMineHitNotification = showMineHitNotification;
+showMineHitNotification = function() {
+    playSound('mine');
+    if (originalShowMineHitNotification) {
+        originalShowMineHitNotification();
+    }
+};
+
+// 重写showCurrentPlayerNotification函数，添加音效
+var originalShowCurrentPlayerNotification = showCurrentPlayerNotification;
+showCurrentPlayerNotification = function() {
+    playSound('turn');
+    if (originalShowCurrentPlayerNotification) {
+        originalShowCurrentPlayerNotification();
+    }
+};
+</script>
+
+<div style="margin-top:6rem;width:90%">
+ID: <span id=uid></span>
+<a id=setr class=clk onclick="setr()">设置</a>
+<div id="_rename" style="border:solid 1px;display:none;padding:0.5rem;">
+昵称：<input id=nick 输入="text" style="width:5rem;">
+<input 输入="button" value="确定" onclick="rename()">
+</div>
+
+</div>
+
+</div>
+</center>
+
+<script>
+// 调试函数
+function debugGameStatus() {
+    console.log('=== 游戏状态调试 ===');
+    console.log('gameMode:', gameMode);
+    console.log('gameStarted:', gameStarted);
+    console.log('players:', players);
+    console.log('currentPlayerIndex:', currentPlayerIndex);
+    console.log('eliminatedPlayers:', eliminatedPlayers);
+    console.log('typeof ot:', typeof ot);
+    console.log('typeof rt:', typeof rt);
+    console.log('typeof originalRt:', typeof originalRt);
+}
+
+// 在控制台添加调试函数
+window.debugGameStatus = debugGameStatus;
+
+// 确保多人游戏扩展初始化
+setTimeout(function() {
+    if (typeof initMultiplayerExtension === 'function') {
+        initMultiplayerExtension();
+    }
+}, 2000);
+</script>
+
+</body>
+
+</html>
