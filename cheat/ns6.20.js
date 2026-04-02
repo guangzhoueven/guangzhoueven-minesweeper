@@ -77,6 +77,13 @@ function undoMove(){
     
     // 更新撤销按钮显示状态
     c("undoBtn").style.display=gameHistory.length>0?"inline-block":"none";
+    
+    // 如果恢复的游戏状态是进行中，重新启动计时器
+    if(l===1){
+        clearInterval(X); // 清除旧的计时器，避免多个计时器同时运行
+        o=Date.now()-st*1000; // 调整开始时间，使计时器从st秒继续
+        X=setInterval(function(){H(++st)},1e3);
+    }
 }
 
 // 重新绘制游戏界面

@@ -1,4 +1,4 @@
-﻿<html>  
+﻿<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <meta name="renderer" content="webkit"> 
@@ -69,6 +69,29 @@ color:blue;
 
 }
 
+/* 夜间模式样式 - 仅改变背景图片和背景色，绝对不影响文字颜色 */
+body.night-mode {
+    background-color: #1a1e24 !important;
+    background-image: url('https://file.guangzhoueven.dpdns.org/beautiful.svg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    min-height: 100vh;
+}
+/* 确保所有文字颜色保持不变 */
+body.night-mode,
+body.night-mode * {
+    color: inherit !important;
+}
+/* 修复链接颜色为默认蓝色，避免因inherit导致颜色异常 */
+body.night-mode a,
+body.night-mode .clk {
+    color: #0000EE !important;
+}
+body.night-mode a:visited {
+    color: #551A8B !important;
+}
+
 </style>
 
 <script>
@@ -78,14 +101,38 @@ var w1="首字母不符合要求";
 var app="aaa";
 var af0=0;
 var nif0=0;
+
+// 夜间模式切换函数 - 切换body的class，背景图片自动变为beautiful.svg
+function bcolor() {
+    var chk = document.getElementById("bcolor");
+    if (chk.checked) {
+        document.body.classList.add("night-mode");
+    } else {
+        document.body.classList.remove("night-mode");
+        // 恢复日间背景图片
+        document.body.style.backgroundImage = "url('https://file.guangzhoueven.dpdns.org/beautiful-light.svg')";
+        document.body.style.backgroundColor = "#f7f7f0";
+    }
+}
+
+// 页面加载时检查夜间模式状态并初始化背景
+window.addEventListener('DOMContentLoaded', function() {
+    var chk = document.getElementById("bcolor");
+    if (chk && chk.checked) {
+        document.body.classList.add("night-mode");
+    } else {
+        // 确保日间背景正确
+        document.body.style.backgroundImage = "url('https://file.guangzhoueven.dpdns.org/beautiful-light.svg')";
+        document.body.style.backgroundColor = "#f7f7f0";
+    }
+});
 </script>
 
 <base target=_top>
 
 </head>  
 
-<body  style="background-color:#f7f7f0;background-image:url('https://file.guangzhoueven.dpdns.org/beautiful-light.svg');background-size:cover;background-position:center;background-repeat:no-repeat;"  onload="night();start();setTimeout(ad,500);">
-
+<body  bgcolor="#f7f7f0"  onload="night();start();setTimeout(ad,500);"  style="background-color:#f7f7f0;background-image:url('https://file.guangzhoueven.dpdns.org/beautiful-light.svg');background-size:cover;background-position:center;background-repeat:no-repeat;min-height:100vh;">
 
 <center>
 
@@ -107,42 +154,37 @@ var nif0=0;
 </div>
 <div id=custom style="display:none;margin-top:5px">
 横<input id=hm type=number value=40>
-竖<input id=vm 输入=number value=24>
+竖<input id=vm type=number value=24>
 雷<input id=mm type=number value=199>
-<input 输入=button onclick="udf()" value="确定" >
+<input type=button onclick="udf()" value="确定" >
 </div>
 <table style="margin-top:1rem;border-radius:6px;background:#cccccc">
 <tr><td style="padding:9px;">
 
 <table id=p42 class=pad style="height:34px">
 <tr>
-<td width=50%><canvas id="rm" height=23 width=39></canvas>
-</td>
+<td width=50%><canvas id="rm" height=23 width=39></canvas></td>
 <td align=center onmouseup="_45()" style="padding:0 8px 0 8px"><img id="face"></td>
-<td align=center style="padding:0 8px 0 8px"><button id="undoBtn" onclick="undoMove()" style="display:none;">撤销</button></td>
-<!--<td align=center style="padding:0 8px 0 8px"><button id="clearFlagsBtn" onclick="clearAllFlags()">取消标记</button></td>-->
 <td width=50% align=right>
 <!--span id=sff style="margin-right:3px;line-height:18px;vertical-align:top"></span--><canvas id="es" height=23 width=39></canvas></td>
+</tr>
 </table>
-
 
 <canvas id="paf" class="pad" style="margin-top:6px;" width=0 height=0></canvas>
 
 
 <tr><td align=right>
+<tr>
 </table>
-
 
 <div style="margin-top:2rem;" >
 <a id=ss href="scores.htm" >成绩榜</a>
 </div>
+<br><br>
+<a href="./cheat/index.html" >作弊模式</a>&nbsp;&nbsp;
+<a href="./game/index.html" >多人模式</a>&nbsp;&nbsp;
+<a href="./bug/index.html" >离谱模式</a>
 
-<tr>
-<a href="./backup/index.html" >备份</a>
-<tr>
-<a href="./game/index.html" >Game</a>
-<tr>
-<a href="./bug/index.html" >Bug</a>
 
 <div style="width:90%;text-align:left;margin-top:2.5rem;">
 <span style="vertical-align:middle">自动标雷</span><input type=checkbox checked id=af onclick="saf()" >
@@ -227,12 +269,13 @@ var nif0=0;
 <br>
 <br>
 <input type=radio name="opn" value="0" checked onclick="_save(3,0)">长按
-<input 输入=radio name="opn" value="1" onclick="_save(3，1)">快点三次
+<input type=radio name="opn" value="1" onclick="_save(3,1)">快点三次
 </div>
 <br>
 <br>
 
 </div>
+
 
 </div>
 
@@ -273,7 +316,7 @@ var nif0=0;
 
 <script>
 function ad(){
-document。getElementById("gg")。src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2872916894005511"
+document.getElementById("gg").src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2872916894005511"
 }
 </script>
 
@@ -281,8 +324,8 @@ document。getElementById("gg")。src="https://pagead2.googlesyndication.com/pag
 ID: <span id=uid></span>
 <a id=setr class=clk onclick="setr()">设置</a>
 <div id="_rename" style="border:solid 1px;display:none;padding:0.5rem;">
-昵称：<input id=nick 输入="text" style="width:5rem;">
-<input 输入="button" value="确定" onclick="rename()">
+昵称：<input id=nick type="text" style="width:5rem;">
+<input type="button" value="确定" onclick="rename()">
 </div>
 
 </div>
